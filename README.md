@@ -207,19 +207,6 @@ Uploaded PDFs are stored in the container filesystem, and vectors are stored in 
 - the vector index starts empty after each process restart;
 - multiple scaled instances would not share uploaded files or vectors.
 
-For now, treat uploaded files and vector indexes as temporary demo data. Add persistent storage or a vector database only in a later version.
-
-## Interview Explanation
-
-The app follows the standard RAG flow:
-
-- PyPDF reads the uploaded PDF and extracts page text.
-- `RecursiveTextChunker` splits text by paragraphs, lines, sentences, words, and finally characters if needed.
-- The overlap keeps nearby context available across chunk boundaries.
-- The embedding provider turns every chunk into a numeric vector.
-- `InMemoryVectorStore` stores chunk vectors and compares them with cosine similarity.
-- `/ask` embeds the user question, retrieves the top-k most similar chunks, builds a prompt, and asks the LLM to answer only from those chunks.
-- The response includes citations with document name, page number, chunk id, score, and preview text.
 
 ## Notes
 
